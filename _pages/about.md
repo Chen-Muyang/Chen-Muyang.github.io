@@ -23,4 +23,4 @@ A senior student from school of physics, Peking University. My life is a poem wr
 
 提剑跨骑挥鬼雨，白骨如山鸟惊飞。
 
-尘事如潮人如水，只叹江湖几人回
+尘事如潮人如水，只叹江湖几人回。
