@@ -7,7 +7,6 @@ redirect_from:
   - /about.html
 ---
 
-# About Me
 A senior student from school of physics, Peking University. My life is a poem writing in the language of Physics and Music.
 
 # Research Interest
