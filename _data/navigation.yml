@@ -7,7 +7,7 @@
 main:
         
   - title: "Blog"
-    url: /year-archive/
+    url: /blogs/
 
    - title: "Note"
     url: /notes/
