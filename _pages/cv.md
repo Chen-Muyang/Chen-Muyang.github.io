@@ -13,5 +13,5 @@ Education
 ======
 * B.S. in Science, Peking University, 2025
 # Projects
-1. Topological states in $C_4T$ Magnetic systems Advisor: Prof.Zhida Song
+1. Topological states in C4T Magnetic systems Advisor: Prof.Zhida Song
 2. Superconductivity in tWSe2 Advisor: Prof.Jiabin Yu、B.A.B
