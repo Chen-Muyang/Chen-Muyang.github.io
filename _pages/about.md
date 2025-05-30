@@ -7,7 +7,7 @@ redirect_from:
   - /about.html
 ---
 
-Hi! I'm a senior student from Peking University and will soon be a Physics PhD candidate at PennState, continuing my academic career as a theoretical physicists. This is personal website estabalished to display my work and something fun. 
+Hi! I'm a senior student from Peking University and will soon be a Physics PhD candidate at PennState, continuing my academic career as a theoretical physicists. This personal website is estabalished to display my work and share something fun. 
 
 # Research Interest
 1. Strong correlation physics in twisted systems
