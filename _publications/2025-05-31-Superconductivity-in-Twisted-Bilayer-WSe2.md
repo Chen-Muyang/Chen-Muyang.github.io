@@ -8,6 +8,6 @@ date: 2025-05-31
 venue: 'Undergraduate Thesis'
 slidesurl: 'http://Chen-Muyang.github.io/files/Defense.pptx'
 paperurl: 'http://Chen-Muyang.github.io/files/UndergraduateThesis.pdf'
+citation: 'Maybe you can find my thesis on ZhiWang'
 ---
-<!--# citation: 'Your Name, You. (2015). &quot;Paper Title Number 3.&quot; <i>Journal 1</i>. 1(3).'-->
 This paper is based on my research work in 2024, colloborating with guys from Princeton. Hope one day we can publish it.
