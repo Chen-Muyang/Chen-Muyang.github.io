@@ -7,5 +7,5 @@ tags:
   - category1
   - category2
 ---
-
-This post will show up by default. To disable scheduling of future posts, edit `config.yml` and set `future: false`. 
+The next blog post will be released afer the first meeting  with my future PhD advisor!
+<!--This post will show up by default. To disable scheduling of future posts, edit `config.yml` and set `future: false`. -->
