@@ -2,7 +2,7 @@
 title: "Superconductivity in Twisted Bilayer WSe2"
 collection: publications
 category: manuscripts
-permalink: /publication/2025-5-31-UndergraduateThesis
+permalink: /publication/2025-05-31-UndergraduateThesis
 excerpt: 'My undergraduate thesis of B.S. at Peking University'
 date: 2025-05-31
 venue: 'Undergraduate Thesis'
