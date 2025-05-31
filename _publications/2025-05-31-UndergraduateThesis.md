@@ -4,8 +4,8 @@ collection: publications
 category: manuscripts
 permalink: /publication/2025-5-31-UndergraduateThesis
 excerpt: 'My undergraduate thesis of B.S. at Peking University'
-date: 2025-5-31
-venue: 'Journal 1'
+date: 2025-05-31
+venue: 'Undergraduate Thesis'
 # slidesurl: 'http://academicpages.github.io/files/slides1.pdf'
 paperurl: "https://Chen-Muyang.github.io/files/UndergraduateThesis.pdf"
 # bibtexurl: 'http://academicpages.github.io/files/bibtex1.bib'
