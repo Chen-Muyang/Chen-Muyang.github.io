@@ -7,7 +7,7 @@ redirect_from:
   - /about.html
 ---
 
-Hi! I'm new coming physics PhD student at the Penn State University who just graduated from Peking University. This personal website is estabalished to display my work and share something fun. 
+Hi! I'm a new coming physics PhD student at the Penn State University who just graduated from Peking University. This personal website is estabalished to display my work and share something fun. 
 
 # Research Interest
 1. Strong correlation physics in twisted systems
