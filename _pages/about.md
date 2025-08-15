@@ -7,7 +7,7 @@ redirect_from:
   - /about.html
 ---
 
-Hi! I'm a senior student from Peking University and will soon be a Physics PhD candidate at PennState, continuing my academic career as a theoretical physicist. This personal website is estabalished to display my work and share something fun. 
+Hi! I'm new coming physics PhD student at the Penn State University who just graduated from Peking University. This personal website is estabalished to display my work and share something fun. 
 
 # Research Interest
 1. Strong correlation physics in twisted systems
@@ -16,10 +16,10 @@ Hi! I'm a senior student from Peking University and will soon be a Physics PhD c
 4. Intersection of quantum physics and gravity
 
 # Weekly Poem
-西风烈，长空雁叫霜晨月。
+行子对飞蓬，金鞭指铁聪。
 
-霜晨月，马蹄声碎，喇叭声咽。
+功名万里外，心事一杯中。
 
-雄关漫道真如铁，而今迈步从头越。
+虏障燕支北，秦城太北东。
 
-从头越，苍山如海，残阳如血。
+离魂莫惆怅，看取宝刀雄。
