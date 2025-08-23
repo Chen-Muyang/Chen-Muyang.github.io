@@ -1,14 +1,14 @@
 ---
 title: "Teaching experience 1"
 collection: teaching
-type: "Undergraduate course"
+type: "Electricity and Magnetism"
 permalink: /teaching/2025-fall-teaching
 venue: "Penn State University, Department of Physics"
 date: 2025-08-25
 location: "State College, USA"
 ---
 
-This is my first teaching experience!
+This is my first time to be a TA!
 
 Heading 1
 ======
