@@ -16,10 +16,10 @@ Hi! I'm a new coming physics PhD student at the Penn State University who just g
 4. Intersection of quantum physics and gravity
 
 # Weekly Poem
-行子对飞蓬，金鞭指铁聪。
+人事有代谢，往来成古今。
 
-功名万里外，心事一杯中。
+江山留胜迹，我辈复登临。
 
-虏障燕支北，秦城太北东。
+水落鱼梁浅，天寒梦泽深。
 
-离魂莫惆怅，看取宝刀雄。
+羊公碑尚在，读罢泪沾襟。
