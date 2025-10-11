@@ -33,8 +33,10 @@ What I can ne’er express, yet cannot all conceal.
 ![Crossroad](/images/Nittany2.jpg "Crossroad")
 We met an interesting old gentleman who tried to trick us with his giant black spider and a roaring bear, and I should say he successfully shocked us.  Actually one can find his spider
 in the first picture.
+# Some Thoughts
 
 I'm in the crossroad of my research, hesitating about choose one topics from unconventional superconductivity and Interactive heavy fermion systems. Maybe I can choose both? But that means my life will be somewhat stressful. 
+
 Now condensed matter theory is in a dilemma, people are constricted to the cage named "Topological Band Theory". Without this tool, we don't have many good methods to solve some complex systems. For high temperature superconductivity, we have some elegant theories such as RVB theory or slave bosons. However, can these famous theories break the deadlock? I hold my opinions about that. I need to pay attention to the boundary of those theories in my note. 
 
 Instead of elaborating the numerical techniques, I think physicists with ambition should first focus on writing a new phenomenonlogical theory of unconventional superconductivity. Meanwhile, can we find some techniques from statistical physics or the pure statistics to figure out the role of disorder? Also, though the Cooper pairs appear in nearly every superconductor, is it the key component for all the superconductivity?
