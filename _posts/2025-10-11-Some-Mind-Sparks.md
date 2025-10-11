@@ -28,11 +28,11 @@ To mingle with the Universe, and feel
 
 What I can ne’er express, yet cannot all conceal.
 
-- Childe Harold’s Pilgrimage，"The Wanderer's Reflection", Lord Byron
+From Childe Harold’s Pilgrimage，"The Wanderer's Reflection", Lord Byron
 ![Trick](/images/Nittany.jpg "Trick")
 ![Crossroad](/images/Nittany2.jpg "Crossroad")
-We met an interesting old gentleman who tried to trick us with his giant black spider and a roaring bear, and I should say he successfully shocked us.  Actually one can find his spider
-in the first picture.
+We met an interesting old gentleman who tried to trick us with his giant black spider and a roaring bear, and I should say he successfully shocked us.  Actually one can find his spider in the first picture.
+
 # Some Thoughts
 
 I'm in the crossroad of my research, hesitating about choose one topics from unconventional superconductivity and Interactive heavy fermion systems. Maybe I can choose both? But that means my life will be somewhat stressful. 
