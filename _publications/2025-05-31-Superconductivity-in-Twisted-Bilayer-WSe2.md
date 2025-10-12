@@ -1,7 +1,7 @@
 ---
 title: "Superconductivity in Twisted Bilayer WSe2"
 collection: publications
-category: manuscripts
+category: books
 permalink: /publication/2025-05-31-Superconductivity-in-Twisted-Bilayer-WSe2
 excerpt: 'This is my undergraduate Thesis at Peking University. '
 date: 2025-05-31
