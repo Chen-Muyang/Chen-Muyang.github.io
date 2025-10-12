@@ -20,33 +20,21 @@ layout: compress
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        background-color: #1a1a1a; /* 添加背景色作为图片加载前的占位 */
+        background-color: #1a1a1a;
         z-index: 10000;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
-        will-change: transform, opacity;
+        transition: all 0.6s ease;
       }
       
-      /* 添加遮罩层增加文字可读性 */
-      #fullscreen-intro::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(to bottom, 
-          rgba(0,0,0,0) 0%, 
-          rgba(0,0,0,0) 60%, 
-          rgba(0,0,0,0.3) 80%, 
-          rgba(0,0,0,0.5) 100%);
-        pointer-events: none;
+      #fullscreen-intro.hidden {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-100%);
       }
       
-      /* 可选：添加欢迎文字 */
       .welcome-text {
         color: white;
         font-size: 3rem;
@@ -54,8 +42,6 @@ layout: compress
         text-align: center;
         margin-bottom: 2rem;
         text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-        opacity: 0;
-        animation: fadeInUp 1s ease 0.5s forwards;
       }
       
       .scroll-hint {
@@ -64,69 +50,24 @@ layout: compress
         color: white;
         text-align: center;
         font-size: 16px;
-        font-weight: 300;
         letter-spacing: 2px;
         text-transform: uppercase;
-        opacity: 0;
-        animation: fadeInUp 1s ease 1s forwards;
         cursor: pointer;
-        z-index: 1;
+        animation: pulse 2s infinite;
       }
       
-      .scroll-hint .arrow {
-        font-size: 20px;
-        margin-top: 8px;
-        display: block;
-        animation: bounce 2s infinite 2s;
+      .scroll-hint:hover {
+        transform: scale(1.1);
       }
       
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      
-      @keyframes bounce {
-        0%, 20%, 50%, 80%, 100% {
-          transform: translateY(0);
-        }
-        40% {
-          transform: translateY(-10px);
-        }
-        60% {
-          transform: translateY(-5px);
-        }
+      @keyframes pulse {
+        0%, 100% { opacity: 0.7; }
+        50% { opacity: 1; }
       }
       
       /* 隐藏body滚动条 */
       body.intro-active {
         overflow: hidden;
-        height: 100vh;
-        position: fixed;
-        width: 100%;
-      }
-      
-      /* 主内容 */
-      #main-content {
-        position: relative;
-        z-index: 1;
-        opacity: 0;
-        transition: opacity 0.6s ease;
-      }
-      
-      body:not(.intro-active) #main-content {
-        opacity: 1;
-      }
-      
-      /* 隐藏动画 */
-      #fullscreen-intro.hiding {
-        transform: translateY(-100%);
-        opacity: 0;
       }
       
       /* 移动端优化 */
@@ -134,56 +75,19 @@ layout: compress
         .welcome-text {
           font-size: 2rem;
         }
-        
-        .scroll-hint {
-          font-size: 14px;
-          bottom: 30px;
-        }
-      }
-      
-      /* 加载指示器 */
-      .loading-spinner {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 40px;
-        height: 40px;
-        border: 3px solid rgba(255,255,255,0.3);
-        border-top-color: white;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        z-index: 1;
-      }
-      
-      @keyframes spin {
-        to { transform: translate(-50%, -50%) rotate(360deg); }
-      }
-      
-      /* 图片加载完成后隐藏加载器 */
-      #fullscreen-intro.loaded .loading-spinner {
-        display: none;
       }
     </style>
   </head>
   
   <body class="intro-active">
     <!-- 全屏首图 -->
-    {% if page.url == "/" or page.url == "/index.html" %}
     <div id="fullscreen-intro">
-      <!-- 加载指示器 -->
-      <div class="loading-spinner"></div>
-      
-      <!-- 欢迎文字（可选） -->
       <h1 class="welcome-text">Welcome</h1>
-      
-      <!-- 滚动提示 -->
-      <div class="scroll-hint">
+      <div class="scroll-hint" onclick="hideIntro()">
         <span>Scroll Up</span>
         <div class="arrow">↑</div>
       </div>
     </div>
-    {% endif %}
     
     <!-- 主内容 -->
     <div id="main-content">
@@ -200,117 +104,80 @@ layout: compress
     
     {% include scripts.html %}
     
-    {% if page.url == "/" or page.url == "/index.html" %}
     <script>
-      (function() {
-        'use strict';
+      // 确保DOM加载完成
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM loaded, initializing intro...');
         
-        const intro = document.getElementById('fullscreen-intro');
-        if (!intro) return; // 如果不是首页，直接返回
+        var intro = document.getElementById('fullscreen-intro');
+        var body = document.body;
+        var isHidden = false;
         
-        const body = document.body;
-        const mainContent = document.getElementById('main-content');
-        let isHidden = false;
-        
-        // 检查是否已经访问过（使用sessionStorage）
-        const hasVisited = sessionStorage.getItem('hasVisitedIntro');
-        if (hasVisited) {
-          // 如果已访问过，直接显示主内容
-          body.classList.remove('intro-active');
-          intro.style.display = 'none';
-          mainContent.style.opacity = '1';
-          return;
-        }
-        
-        // 图片预加载
-        const bgImage = new Image();
-        bgImage.onload = function() {
-          intro.classList.add('loaded');
-        };
-        bgImage.src = '{{ site.baseurl }}/files/Nittany2.jpg';
-        
-        // 隐藏首图的函数
-        function hideIntro() {
+        // 全局函数，供onclick使用
+        window.hideIntro = function() {
           if (isHidden) return;
           isHidden = true;
+          console.log('Hiding intro...');
           
-          // 添加隐藏动画类
-          intro.classList.add('hiding');
+          intro.classList.add('hidden');
+          body.classList.remove('intro-active');
           
-          // 延迟后移除固定定位，允许滚动
-          setTimeout(() => {
-            body.classList.remove('intro-active');
-            mainContent.style.opacity = '1';
-            
-            // 记录已访问
-            sessionStorage.setItem('hasVisitedIntro', 'true');
-            
-            // 完全移除元素
-            setTimeout(() => {
-              intro.style.display = 'none';
-            }, 100);
+          setTimeout(function() {
+            intro.style.display = 'none';
           }, 600);
         }
         
-        // 多种触发方式
+        // 监听各种事件
         
         // 1. 鼠标滚轮
-        let wheelTimeout;
-        window.addEventListener('wheel', function(e) {
-          if (!isHidden && e.deltaY > 0) {
-            clearTimeout(wheelTimeout);
-            wheelTimeout = setTimeout(() => hideIntro(), 50);
-          }
-        }, { passive: true });
-        
-        // 2. 触摸滑动（移动端）
-        let touchStartY = 0;
-        window.addEventListener('touchstart', function(e) {
-          touchStartY = e.touches[0].clientY;
-        }, { passive: true });
-        
-        window.addEventListener('touchmove', function(e) {
-          const touchEndY = e.touches[0].clientY;
-          if (!isHidden && touchStartY - touchEndY > 30) {
+        document.addEventListener('wheel', function(e) {
+          console.log('Wheel event detected');
+          if (e.deltaY > 0) {
             hideIntro();
           }
-        }, { passive: true });
+        });
         
-        // 3. 键盘控制
-        window.addEventListener('keydown', function(e) {
-          // 空格键、Page Down、向下箭头、Enter键
-          if (!isHidden && [32, 34, 40, 13].includes(e.keyCode)) {
+        // 2. 键盘
+        document.addEventListener('keydown', function(e) {
+          console.log('Key pressed:', e.key);
+          // 空格、Enter、向下箭头、Page Down
+          if (e.key === ' ' || e.key === 'Enter' || e.key === 'ArrowDown' || e.key === 'PageDown') {
             e.preventDefault();
             hideIntro();
           }
         });
         
-        // 4. 点击提示或任意位置
-        intro.addEventListener('click', function(e) {
-          if (!isHidden) {
+        // 3. 触摸（移动端）
+        var touchStartY = 0;
+        document.addEventListener('touchstart', function(e) {
+          touchStartY = e.touches[0].clientY;
+          console.log('Touch start at:', touchStartY);
+        });
+        
+        document.addEventListener('touchend', function(e) {
+          var touchEndY = e.changedTouches[0].clientY;
+          console.log('Touch end at:', touchEndY);
+          if (touchStartY - touchEndY > 50) { // 向上滑动超过50px
             hideIntro();
           }
         });
         
-        // 5. 自动隐藏（可选，10秒后）
+        // 4. 点击整个屏幕
+        intro.addEventListener('click', function(e) {
+          console.log('Intro clicked');
+          hideIntro();
+        });
+        
+        // 5. 自动隐藏（10秒后）
         setTimeout(function() {
           if (!isHidden) {
+            console.log('Auto-hiding after 10 seconds');
             hideIntro();
           }
         }, 10000);
         
-        // 防止iOS橡皮筋效果
-        let lastY = 0;
-        intro.addEventListener('touchmove', function(e) {
-          const currentY = e.touches[0].clientY;
-          if (currentY > lastY) {
-            e.preventDefault();
-          }
-          lastY = currentY;
-        }, { passive: false });
-        
-      })();
+        console.log('All event listeners attached');
+      });
     </script>
-    {% endif %}
   </body>
 </html>
