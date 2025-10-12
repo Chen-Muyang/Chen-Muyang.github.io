@@ -16,89 +16,70 @@ layout: compress
         position: fixed;
         top: 0;
         left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: 9999;
-        background-color: #000;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        overflow: hidden;
-        transition: opacity 1s ease;
-      }
-
-      #fullscreen-intro .intro-image {
-        position: absolute;
-        top: 0;
-        left: 0;
         width: 100%;
         height: 100%;
-        background-image: url('{{ "/files/你的图片文件名.jpg" | relative_url }}');
+        background-image: url('{{ site.baseurl }}/files/你的图片文件名.jpg');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        z-index: -1;
-        opacity: 0.95;
+        z-index: 10000;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        padding-bottom: 50px;
+        transition: opacity 0.8s ease, visibility 0.8s ease;
       }
 
-      .scroll-indicator {
-        position: absolute;
-        bottom: 40px;
-        left: 50%;
-        transform: translateX(-50%);
+      .scroll-hint {
         color: white;
-        font-size: 1rem;
-        font-family: Arial, sans-serif;
         text-align: center;
-        animation: bounce 2s infinite;
+        font-size: 18px;
+        margin-bottom: 20px;
+        animation: fadeInOut 2s infinite;
       }
 
-      .scroll-indicator .arrow {
-        width: 20px;
-        height: 20px;
-        margin: 10px auto 0;
-        border-right: 2px solid white;
-        border-bottom: 2px solid white;
-        transform: rotate(45deg);
+      .scroll-hint .arrow {
+        font-size: 24px;
+        margin-top: 10px;
+        display: block;
       }
 
-      @keyframes bounce {
-        0%, 100% { transform: translateX(-50%) translateY(0); }
-        50% { transform: translateX(-50%) translateY(-10px); }
+      @keyframes fadeInOut {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 1; }
       }
 
-      #main-content {
-        opacity: 0;
-        transition: opacity 1s ease;
-      }
-
-      body.no-scroll {
+      /* 隐藏body滚动条 */
+      body.intro-active {
         overflow: hidden;
         height: 100vh;
+      }
+
+      /* 主内容 - 初始在屏幕外 */
+      #main-content {
+        position: relative;
+        z-index: 1;
       }
     </style>
   </head>
 
-  <body class="no-scroll">
+  <body class="intro-active">
 
     <!-- 全屏首图 -->
     <div id="fullscreen-intro">
-      <div class="intro-image"></div>
-      <div style="color:white; text-align:center; z-index:1;">
-        <h1 style="font-size:2.5em;">Welcome to My Homepage</h1>
-      </div>
-      <div class="scroll-indicator">
-        <span>Scroll or Click</span>
-        <div class="arrow"></div>
+      <div class="scroll-hint">
+        Scroll Up
+        <div class="arrow">↑</div>
       </div>
     </div>
 
-    <!-- 主体内容 -->
+    <!-- 主内容 -->
     <div id="main-content">
       {% include browser-upgrade.html %}
       {% include masthead.html %}
+
       {{ content }}
+
       <div class="page__footer">
         <footer>
           {% include footer/custom.html %}
@@ -108,32 +89,74 @@ layout: compress
     </div>
 
     {% include scripts.html %}
-
+    
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const intro = document.getElementById('fullscreen-intro');
-        const main = document.getElementById('main-content');
-        const body = document.body;
-        let dismissed = false;
+      // 简单直接的解决方案
+      let intro = document.getElementById('fullscreen-intro');
+      let body = document.body;
+      let scrolled = false;
 
-        function dismissIntro() {
-          if (dismissed) return;
-          dismissed = true;
-          intro.style.opacity = '0';
-          main.style.opacity = '1';
-          body.classList.remove('no-scroll');
-          setTimeout(() => intro.remove(), 1000);
+      // 方法1: 直接监听整个文档的滚动事件
+      window.addEventListener('scroll', function() {
+        if (!scrolled && (window.pageYOffset > 10 || document.documentElement.scrollTop > 10)) {
+          hideIntro();
         }
-
-        // 触发方式：滚动 / 点击 / 按键
-        window.addEventListener('wheel', dismissIntro, { passive: true });
-        window.addEventListener('touchmove', dismissIntro, { passive: true });
-        window.addEventListener('keydown', dismissIntro);
-        intro.addEventListener('click', dismissIntro);
-
-        // 自动隐藏（可选）
-        // setTimeout(dismissIntro, 8000);
       });
+
+      // 方法2: 监听鼠标滚轮事件
+      window.addEventListener('wheel', function(e) {
+        if (!scrolled && e.deltaY > 0) {
+          hideIntro();
+        }
+      });
+
+      // 方法3: 监听触摸滑动事件
+      window.addEventListener('touchmove', function(e) {
+        if (!scrolled) {
+          hideIntro();
+        }
+      });
+
+      // 方法4: 监听键盘事件
+      window.addEventListener('keydown', function(e) {
+        if (!scrolled && [32, 34, 40].includes(e.keyCode)) { // 空格, PageDown, 向下箭头
+          hideIntro();
+        }
+      });
+
+      // 方法5: 点击任意位置跳过
+      intro.addEventListener('click', function() {
+        if (!scrolled) {
+          hideIntro();
+        }
+      });
+
+      function hideIntro() {
+        if (scrolled) return;
+        scrolled = true;
+        
+        // 淡出首图
+        intro.style.opacity = '0';
+        intro.style.visibility = 'hidden';
+        
+        // 允许页面滚动
+        body.classList.remove('intro-active');
+        
+        // 3秒后完全移除元素
+        setTimeout(function() {
+          intro.style.display = 'none';
+        }, 800);
+      }
+
+      // 备用方案: 8秒后自动隐藏
+      setTimeout(function() {
+        if (!scrolled) {
+          hideIntro();
+        }
+      }, 8000);
+
+      console.log('Intro script loaded successfully');
     </script>
+
   </body>
 </html>
