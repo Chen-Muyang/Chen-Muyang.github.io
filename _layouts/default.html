@@ -10,7 +10,6 @@ layout: compress
     {% include head.html %}
     {% include head/custom.html %}
     
-    <!-- 添加全屏首图样式 -->
     <style>
       /* 全屏首图样式 */
       #fullscreen-intro {
@@ -20,30 +19,39 @@ layout: compress
         width: 100vw;
         height: 100vh;
         z-index: 9999;
-        background: #000;
+        background-color: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        overflow: hidden;
+        transition: opacity 1s ease;
       }
 
-      .intro-image {
+      #fullscreen-intro .intro-image {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
-        background-image: url('{{ site.baseurl }}/images/Nittany2.jpg'); /* 替换为你的图片路径 */
+        background-image: url('{{ "/files/你的图片文件名.jpg" | relative_url }}');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
+        z-index: -1;
+        opacity: 0.95;
       }
 
-      /* 滚动指示器 */
       .scroll-indicator {
         position: absolute;
-        bottom: 30px;
+        bottom: 40px;
         left: 50%;
         transform: translateX(-50%);
         color: white;
-        text-align: center;
-        opacity: 0.8;
-        animation: bounce 2s infinite;
+        font-size: 1rem;
         font-family: Arial, sans-serif;
-        font-size: 16px;
+        text-align: center;
+        animation: bounce 2s infinite;
       }
 
       .scroll-indicator .arrow {
@@ -60,20 +68,11 @@ layout: compress
         50% { transform: translateX(-50%) translateY(-10px); }
       }
 
-      /* 主内容区域初始状态 */
-      .content-hidden {
+      #main-content {
         opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.5s ease, visibility 0.5s ease;
+        transition: opacity 1s ease;
       }
 
-      /* 主内容区域显示状态 */
-      .content-visible {
-        opacity: 1;
-        visibility: visible;
-      }
-      
-      /* 确保body不滚动直到首图消失 */
       body.no-scroll {
         overflow: hidden;
         height: 100vh;
@@ -83,22 +82,23 @@ layout: compress
 
   <body class="no-scroll">
 
-    <!-- 全屏首图部分 -->
+    <!-- 全屏首图 -->
     <div id="fullscreen-intro">
       <div class="intro-image"></div>
+      <div style="color:white; text-align:center; z-index:1;">
+        <h1 style="font-size:2.5em;">Welcome to My Homepage</h1>
+      </div>
       <div class="scroll-indicator">
-        <span>Scroll Up</span>
+        <span>Scroll or Click</span>
         <div class="arrow"></div>
       </div>
     </div>
 
-    <!-- 现有网站内容包装 -->
-    <div id="main-content" class="content-hidden">
+    <!-- 主体内容 -->
+    <div id="main-content">
       {% include browser-upgrade.html %}
       {% include masthead.html %}
-
       {{ content }}
-
       <div class="page__footer">
         <footer>
           {% include footer/custom.html %}
@@ -108,97 +108,32 @@ layout: compress
     </div>
 
     {% include scripts.html %}
-    
-    <!-- 全屏首图交互脚本 -->
+
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        const fullscreenIntro = document.getElementById('fullscreen-intro');
-        const mainContent = document.getElementById('main-content');
+        const intro = document.getElementById('fullscreen-intro');
+        const main = document.getElementById('main-content');
         const body = document.body;
-        let introDismissed = false;
-        let scrollTimeout;
-        
-        // 检测滚动事件
-        function handleScroll(event) {
-          if (introDismissed) return;
-          
-          // 清除之前的超时
-          clearTimeout(scrollTimeout);
-          
-          // 设置新的超时来触发隐藏
-          scrollTimeout = setTimeout(function() {
-            // 检查滚动方向 - 向上滚动
-            if (event.deltaY > 0 || window.pageYOffset > 0) {
-              dismissIntro();
-            }
-          }, 50);
-        }
-        
-        // 检测触摸事件
-        function handleTouchMove(event) {
-          if (introDismissed) return;
-          
-          // 如果有向上滚动的趋势，就隐藏首图
-          if (window.pageYOffset > 5) {
-            dismissIntro();
-          }
-        }
-        
-        // 检测键盘事件（空格、方向键等）
-        function handleKeyDown(event) {
-          if (introDismissed) return;
-          
-          // 空格、PageDown、向下箭头等都会触发
-          if ([32, 33, 34, 40].includes(event.keyCode)) {
-            dismissIntro();
-          }
-        }
-        
-        // 隐藏首图并显示主内容
+        let dismissed = false;
+
         function dismissIntro() {
-          if (introDismissed) return;
-          introDismissed = true;
-          
-          console.log('Dismissing intro'); // 调试用
-          
-          // 淡出首图
-          fullscreenIntro.style.transition = 'opacity 0.5s ease';
-          fullscreenIntro.style.opacity = '0';
-          
-          // 显示主内容
-          mainContent.classList.remove('content-hidden');
-          mainContent.classList.add('content-visible');
-          
-          // 恢复body滚动
+          if (dismissed) return;
+          dismissed = true;
+          intro.style.opacity = '0';
+          main.style.opacity = '1';
           body.classList.remove('no-scroll');
-          
-          // 移除首图元素
-          setTimeout(() => {
-            fullscreenIntro.style.display = 'none';
-            // 移除所有事件监听
-            window.removeEventListener('wheel', handleScroll);
-            window.removeEventListener('scroll', handleTouchMove);
-            window.removeEventListener('keydown', handleKeyDown);
-            window.removeEventListener('touchmove', handleTouchMove);
-          }, 500);
+          setTimeout(() => intro.remove(), 1000);
         }
-        
-        // 添加各种事件监听
-        window.addEventListener('wheel', handleScroll, { passive: true });
-        window.addEventListener('scroll', handleTouchMove, { passive: true });
-        window.addEventListener('keydown', handleKeyDown);
-        window.addEventListener('touchmove', handleTouchMove, { passive: true });
-        
-        // 点击跳过功能
-        fullscreenIntro.addEventListener('click', dismissIntro);
-        
-        // 可选：设置超时自动隐藏（例如8秒后）
+
+        // 触发方式：滚动 / 点击 / 按键
+        window.addEventListener('wheel', dismissIntro, { passive: true });
+        window.addEventListener('touchmove', dismissIntro, { passive: true });
+        window.addEventListener('keydown', dismissIntro);
+        intro.addEventListener('click', dismissIntro);
+
+        // 自动隐藏（可选）
         // setTimeout(dismissIntro, 8000);
-        
-        // 调试：确保脚本加载
-        console.log('Fullscreen intro script loaded');
       });
     </script>
-
   </body>
 </html>
