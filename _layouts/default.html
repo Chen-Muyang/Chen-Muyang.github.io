@@ -9,23 +9,174 @@ layout: compress
   <head>
     {% include head.html %}
     {% include head/custom.html %}
+    
+    <!-- 添加全屏首图样式 -->
+    <style>
+      /* 全屏首图样式 */
+      #fullscreen-intro {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 9999;
+        background: #000;
+      }
+
+      .intro-image {
+        width: 100%;
+        height: 100%;
+        background-image: url('{{ site.baseurl }}/images/Nittany2.jpg'); /* 替换为你的图片路径 */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+
+      /* 滚动指示器 */
+      .scroll-indicator {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: white;
+        text-align: center;
+        opacity: 0.8;
+        animation: bounce 2s infinite;
+      }
+
+      .scroll-indicator .arrow {
+        width: 20px;
+        height: 20px;
+        margin: 10px auto 0;
+        border-right: 2px solid white;
+        border-bottom: 2px solid white;
+        transform: rotate(45deg);
+      }
+
+      @keyframes bounce {
+        0%, 100% { transform: translateX(-50%) translateY(0); }
+        50% { transform: translateX(-50%) translateY(-10px); }
+      }
+
+      /* 主内容区域初始状态 */
+      .content-hidden {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+
+      /* 主内容区域显示状态 */
+      .content-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+      /* 确保body不滚动直到首图消失 */
+      body.no-scroll {
+        overflow: hidden;
+        height: 100vh;
+      }
+    </style>
   </head>
 
-  <body>
+  <body class="no-scroll">
 
-    {% include browser-upgrade.html %}
-    {% include masthead.html %}
+    <!-- 全屏首图部分 -->
+    <div id="fullscreen-intro">
+      <div class="intro-image"></div>
+      <div class="scroll-indicator">
+        <span>向上滚动</span>
+        <div class="arrow"></div>
+      </div>
+    </div>
 
-    {{ content }}
+    <!-- 现有网站内容包装 -->
+    <div id="main-content" class="content-hidden">
+      {% include browser-upgrade.html %}
+      {% include masthead.html %}
 
-    <div class="page__footer">
-      <footer>
-        {% include footer/custom.html %}
-        {% include footer.html %}
-      </footer>
+      {{ content }}
+
+      <div class="page__footer">
+        <footer>
+          {% include footer/custom.html %}
+          {% include footer.html %}
+        </footer>
+      </div>
     </div>
 
     {% include scripts.html %}
+    
+    <!-- 全屏首图交互脚本 -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const fullscreenIntro = document.getElementById('fullscreen-intro');
+        const mainContent = document.getElementById('main-content');
+        const body = document.body;
+        let introDismissed = false;
+        
+        // 检测滚动事件
+        function handleScroll(event) {
+          if (introDismissed) return;
+          
+          // 如果是向上滚动
+          if (event.deltaY > 0 || event.detail > 0) {
+            dismissIntro();
+          }
+        }
+        
+        // 隐藏首图并显示主内容
+        function dismissIntro() {
+          introDismissed = true;
+          
+          // 淡出首图
+          fullscreenIntro.style.transition = 'opacity 0.5s ease';
+          fullscreenIntro.style.opacity = '0';
+          
+          // 显示主内容
+          mainContent.classList.remove('content-hidden');
+          mainContent.classList.add('content-visible');
+          
+          // 恢复body滚动
+          body.classList.remove('no-scroll');
+          
+          // 移除首图元素（可选）
+          setTimeout(() => {
+            fullscreenIntro.style.display = 'none';
+            // 移除滚动监听
+            window.removeEventListener('wheel', handleScroll);
+            window.removeEventListener('DOMMouseScroll', handleScroll); // 兼容Firefox
+          }, 500);
+        }
+        
+        // 添加滚动事件监听
+        window.addEventListener('wheel', handleScroll);
+        window.addEventListener('DOMMouseScroll', handleScroll); // 兼容Firefox
+        
+        // 可选：添加触摸滑动支持
+        let touchStartY = 0;
+        
+        window.addEventListener('touchstart', function(e) {
+          touchStartY = e.touches[0].clientY;
+        });
+        
+        window.addEventListener('touchmove', function(e) {
+          if (introDismissed) return;
+          
+          const touchY = e.touches[0].clientY;
+          // 如果是向上滑动
+          if (touchY < touchStartY) {
+            dismissIntro();
+          }
+        });
+        
+        // 可选：点击跳过功能
+        fullscreenIntro.addEventListener('click', dismissIntro);
+        
+        // 可选：设置超时自动隐藏（例如5秒后）
+        // setTimeout(dismissIntro, 5000);
+      });
+    </script>
 
   </body>
 </html>
