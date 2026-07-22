@@ -4,6 +4,7 @@ collection: Note
 type: "Superconductivity"
 permalink: /teaching/SC1
 venue: "Penn State University, Department of Physics"
+paperurl: 'http://Chen-Muyang.github.io/files/Eliashberg_Theory.pdf'
 date: 2025-08-25
 ---
 
