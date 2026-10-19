@@ -26,7 +26,7 @@ export const navBarConfig: NavBarConfig = {
 export const profileConfig: ProfileConfig = {
   avatar: "assets/images/avatar.png", // Replace this square image to change your profile picture.
   name: "Mu-Yang Chen · 陈沐阳",
-  bio: "Physics PhD student at Penn State. Exploring correlated quantum matter, and sharing notes along the way.",
+  bio: "A special focus on Man-Body Theory[doge].",
   links: [{ name: "GitHub", icon: "fa6-brands:github", url: "https://github.com/Chen-Muyang" }],
 };
 // Do not apply the upstream demo's Creative Commons license to existing personal writing.
