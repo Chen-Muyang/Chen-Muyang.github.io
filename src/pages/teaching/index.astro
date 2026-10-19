@@ -1,0 +1,14 @@
+---
+import { getCollection } from "astro:content";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import ResourceCard from "@components/ResourceCard.astro";
+const entries = (await getCollection("notes")).sort((a,b) => b.data.published.valueOf() - a.data.published.valueOf());
+---
+<MainGridLayout title="Notes" description="Working notes and seminar slides from my exploration of theoretical physics.">
+  <header class="card-base p-6 md:p-8 mb-4">
+    <p class="text-sm uppercase tracking-widest text-[var(--primary)] font-bold mb-3">{entries.length} resources</p>
+    <h1 class="text-4xl font-bold text-90">Notes</h1>
+    <p class="text-75 mt-4 leading-relaxed">Working notes and seminar slides from my exploration of theoretical physics.</p>
+  </header>
+  {entries.map(entry => <ResourceCard entry={entry} />)}
+</MainGridLayout>

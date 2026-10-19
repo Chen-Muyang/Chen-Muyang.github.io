@@ -1,0 +1,11 @@
+---
+import { getCollection } from "astro:content";
+import ResourceDetail from "@components/ResourceDetail.astro";
+export async function getStaticPaths() {
+  return (await getCollection("publications")).map(entry => ({
+    params: { slug: entry.data.permalink.replace("/publication/", "") }, props: { entry }
+  }));
+}
+const { entry } = Astro.props;
+---
+<ResourceDetail entry={entry} />

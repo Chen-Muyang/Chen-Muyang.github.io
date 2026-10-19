@@ -1,0 +1,14 @@
+---
+import { getCollection } from "astro:content";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import ResourceCard from "@components/ResourceCard.astro";
+const entries = (await getCollection("publications")).sort((a,b) => b.data.published.valueOf() - a.data.published.valueOf());
+---
+<MainGridLayout title="Publications" description="Research papers, theses, and the slides that go with them.">
+  <header class="card-base p-6 md:p-8 mb-4">
+    <p class="text-sm uppercase tracking-widest text-[var(--primary)] font-bold mb-3">{entries.length} publication{entries.length === 1 ? "" : "s"}</p>
+    <h1 class="text-4xl font-bold text-90">Publications</h1>
+    <p class="text-75 mt-4 leading-relaxed">Research papers, theses, and the slides that go with them.</p>
+  </header>
+  {entries.map(entry => <ResourceCard entry={entry} />)}
+</MainGridLayout>

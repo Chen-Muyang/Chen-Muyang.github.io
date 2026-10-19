@@ -1,0 +1,453 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Your website · Publishing and maintenance guide</title><style>
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f3f7f5;color:#22392f;font:17px/1.7 system-ui,-apple-system,Segoe UI,sans-serif}nav{position:sticky;top:0;background:#123d31;color:white;padding:14px 5%;display:flex;gap:22px;flex-wrap:wrap;z-index:2}nav a{color:white;text-decoration:none;font-size:14px;font-weight:650}.hero{max-width:1060px;margin:50px auto 26px;padding:0 28px}.hero small{letter-spacing:.15em;color:#297c60;font-weight:700}.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.15;margin:12px 0}.hero p{max-width:730px;color:#52685e}main{max-width:1060px;margin:auto;padding:0 28px 60px}section{background:white;border:1px solid #dae6df;border-radius:22px;padding:38px;margin:28px 0;scroll-margin-top:75px}h1{font-size:30px;line-height:1.2}h2{font-size:23px;line-height:1.35;margin-top:38px;padding-top:10px;border-top:1px solid #e3ebe6}h3{font-size:19px}a{color:#116e51;text-underline-offset:3px}code{background:#edf5f0;border-radius:5px;padding:2px 5px;font-size:.88em}pre{background:#132e25;color:#e5f3e9;overflow:auto;padding:20px;border-radius:12px;line-height:1.6}pre code{background:none;padding:0}table{display:block;overflow:auto;border-collapse:collapse;font-size:14px;width:100%}td,th{text-align:left;padding:12px;border:1px solid #dce6df;vertical-align:top}th{background:#edf5f0}li{margin:8px 0}strong{color:#153d2d}nav strong{color:white}blockquote{border-left:4px solid #5a9b79;padding-left:18px;color:#52685e}@media(max-width:650px){main{padding:0 12px 25px}.hero{padding:0 20px}section{padding:22px 18px;border-radius:15px}nav{gap:14px}body{font-size:16px}}@media print{nav{display:none}body{background:white;font-size:11pt}main{max-width:none;padding:0}section{border:0;padding:0;break-before:page}pre{white-space:pre-wrap}a{color:inherit}}
+</style></head><body><nav><strong>CHEN SITE · GUIDE</strong><a href="#publish">Upload & publish</a><a href="#update">Update your website</a><a href="#images">Image map</a></nav><header class="hero"><small>FUWARI · YOUR PERSONAL WEBSITE</small><h1>Publish once.<br>Keep making it yours.</h1><p>Use the publishing walkthrough to understand deployment, then use the maintenance guide whenever you want to add work or change your photographs.</p><p>GitHub Actions builds the website from the master branch.</p></header><main><section id="publish"><h1>Publish your new website on GitHub</h1>
+<p>This guide is written for your existing repository, <strong>Chen-Muyang/Chen-Muyang.github.io</strong>, whose publishing branch is <strong>master</strong>. Your website address remains <a href="https://chen-muyang.github.io/">chen-muyang.github.io</a>.</p>
+<p>This guide explains the first publication and how deployment works. If the Fuwari site is already live, use the maintenance section for everyday changes. GitHub will build the site for you; you do not need Node.js on your computer to use this publishing method.</p>
+<h2>1. Understand the two downloads</h2>
+<ul>
+<li><strong>Chen-Muyang-Fuwari-source.zip</strong> contains the editable website. This is the download to copy into your repository. After extracting it, open the <code>Chen-Muyang-Fuwari-source</code> folder.</li>
+<li><strong>Chen-Muyang-Fuwari-preview.zip</strong> contains an already compiled snapshot. It is useful for viewing the design locally. Do not copy this ZIP into the repository or use it instead of the source package.</li>
+</ul>
+<p>The source package includes <code>src</code>, <code>public</code>, <code>.github</code>, <code>package.json</code>, and the build configuration. It contains no Git credentials, Git history, installed dependencies, or build cache. The old Jekyll folders already in your repository can stay there as reference; the new build uses <code>src/content</code> and <code>public</code>.</p>
+<h2>2. Install GitHub Desktop and sign in</h2>
+<ol>
+<li>Download <a href="https://desktop.github.com/">GitHub Desktop</a> and install it.</li>
+<li>Open it and sign in to the GitHub account that owns <code>Chen-Muyang/Chen-Muyang.github.io</code>.</li>
+<li>Finish the browser sign-in prompts, then return to GitHub Desktop.</li>
+</ol>
+<p>A <strong>repository</strong> is the website's project folder. A <strong>commit</strong> saves a version of your changes. <strong>Push</strong> uploads those commits. A <strong>branch</strong> lets you prepare the redesign separately. A <strong>pull request</strong> gives you a page to review and merge that branch.</p>
+<h2>3. Download your existing repository into Desktop</h2>
+<ol>
+<li>Choose <strong>File → Clone repository</strong>.</li>
+<li>Select the <strong>URL</strong> tab and paste <code>https://github.com/Chen-Muyang/Chen-Muyang.github.io</code>.</li>
+<li>Choose a local folder you can find again, such as <code>Documents/GitHub/Chen-Muyang.github.io</code>.</li>
+<li>Click <strong>Clone</strong> and wait for it to finish.</li>
+<li>At the top, confirm that <strong>Current repository</strong> is <code>Chen-Muyang.github.io</code> and <strong>Current branch</strong> is <code>master</code>.</li>
+<li>Click <strong>Fetch origin</strong>. If it changes to <strong>Pull origin</strong>, click that too so you start from the latest version.</li>
+</ol>
+<p>If this repository is already in Desktop, select it and fetch/pull instead of cloning a second copy. Finish or save any existing uncommitted work before copying the redesign. <a href="https://docs.github.com/en/desktop/adding-and-cloning-repositories/cloning-and-forking-repositories-from-github-desktop">GitHub's cloning instructions</a>.</p>
+<h2>4. Create a branch for the redesign</h2>
+<ol>
+<li>Click <strong>Current branch → New branch</strong>.</li>
+<li>Name it <code>fuwari-redesign</code> and base it on <code>master</code>.</li>
+<li>Click <strong>Create branch</strong>.</li>
+</ol>
+<p>The branch name at the top should now read <code>fuwari-redesign</code>. Uploading this branch alone will not deploy the new website. <a href="https://docs.github.com/en/desktop/making-changes-in-a-branch/managing-branches-in-github-desktop">GitHub's branch instructions</a>.</p>
+<h2>5. Copy the source files into the repository</h2>
+<ol>
+<li>Right-click <code>Chen-Muyang-Fuwari-source.zip</code> in File Explorer and choose <strong>Extract All</strong>.</li>
+<li>Open the extracted folder until you can see <code>package.json</code>, <code>src</code>, and <code>public</code> together.</li>
+<li>In GitHub Desktop, choose <strong>Repository → Show in Explorer</strong> to open the cloned repository.</li>
+<li>Copy <strong>the contents</strong> of the extracted source folder into the cloned repository folder. Do not copy the outer <code>Chen-Muyang-Fuwari-source</code> folder itself.</li>
+<li>If Windows asks about files with the same names, choose <strong>Replace the files in the destination</strong>. Merge matching folders.</li>
+<li>Keep the existing <code>.git</code> folder and old Jekyll folders. There is no <code>.git</code> folder in the ZIP, so you are not replacing your repository history.</li>
+</ol>
+<p>Check the result before continuing. These files must be at these locations relative to the cloned repository:</p>
+<pre><code class="language-text">Chen-Muyang.github.io/
+  .github/workflows/pages.yml
+  package.json
+  pnpm-lock.yaml
+  astro.config.mjs
+  src/config.ts
+  src/content/posts/
+  src/content/notes/
+  src/content/publications/
+  public/files/Defense.pdf
+</code></pre>
+<p>If instead you see <code>Chen-Muyang.github.io/Chen-Muyang-Fuwari-source/package.json</code>, the files are one folder too deep. Move the extracted folder's contents up to the repository root. Enable <strong>View → Show → Hidden items</strong> in Explorer if you cannot see <code>.github</code>. Do not upload the ZIP file itself.</p>
+<h2>6. Save and upload the branch</h2>
+<ol>
+<li>Return to Desktop. The <strong>Changes</strong> tab should show many new files and a few modified files.</li>
+<li>Confirm the files above are included. <code>node_modules</code>, <code>dist</code>, and <code>.astro</code> should not be listed.</li>
+<li>In the <strong>Summary</strong> box at the lower left, enter <code>Upgrade website to Fuwari and fix publication PDFs</code>.</li>
+<li>Click <strong>Commit to fuwari-redesign</strong>.</li>
+<li>Click <strong>Publish branch</strong> at the top. If the branch was already published, the button will say <strong>Push origin</strong>.</li>
+</ol>
+<p>Committing is a local save; publishing/pushing sends it to GitHub. <a href="https://docs.github.com/en/desktop/making-changes-in-a-branch/committing-and-reviewing-changes-to-your-project-in-github-desktop">GitHub's commit instructions</a>.</p>
+<h2>7. Open a pull request and let GitHub check the build</h2>
+<ol>
+<li>In Desktop, choose <strong>Preview Pull Request</strong> or <strong>Create Pull Request</strong>. You can also visit <a href="https://github.com/Chen-Muyang/Chen-Muyang.github.io">your repository</a>, select <code>fuwari-redesign</code>, and use <strong>Compare &amp; pull request</strong>.</li>
+<li>Confirm <strong>base: master</strong> and <strong>compare: fuwari-redesign</strong>.</li>
+<li>Give it the title <code>Upgrade website to Fuwari</code> and click <strong>Create pull request</strong>.</li>
+<li>Wait for <strong>Build and deploy Fuwari / build</strong> to finish successfully. You can inspect it from the repository's <strong>Actions</strong> tab.</li>
+</ol>
+<p>On a pull request, the workflow builds and checks the site but skips deployment. A green check means GitHub successfully installed dependencies, checked the source, built the search index, and verified the preserved routes and files. If it fails, open the failing run and its red step; fix that error before merging. <a href="https://docs.github.com/en/desktop/working-with-your-remote-repository-on-github-or-github-enterprise/creating-an-issue-or-pull-request-from-github-desktop">GitHub's pull-request instructions</a>.</p>
+<h2>8. Tell GitHub Pages to use the new workflow</h2>
+<ol>
+<li>Open <a href="https://github.com/Chen-Muyang/Chen-Muyang.github.io/settings/pages">repository Settings → Pages</a>.
+Before changing it, note the current Source, branch, and folder so you can restore them if needed.</li>
+<li>Under <strong>Build and deployment</strong>, set <strong>Source</strong> to <strong>GitHub Actions</strong>.</li>
+<li>The package already contains the required workflow at <code>.github/workflows/pages.yml</code>. You do not need to select or create another suggested workflow.</li>
+</ol>
+<p>The old site used Jekyll. This redesign uses Astro, so this setting change is essential. Keep the repository name <code>Chen-Muyang.github.io</code>; the configuration is prepared for that root website address. <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site">GitHub's publishing-source instructions</a>.</p>
+<h2>9. Merge and publish</h2>
+<ol>
+<li>Return to the pull request. After its build succeeds, click <strong>Merge pull request</strong>, then <strong>Confirm merge</strong>.</li>
+<li>Open <strong>Actions → Build and deploy Fuwari</strong> and select the new run for <code>master</code>.</li>
+<li>Wait for both <strong>build</strong> and <strong>deploy</strong> to be green. The deploy job provides the live website link.</li>
+<li>Visit <a href="https://chen-muyang.github.io/">your website</a>. If you still see the old design, press <strong>Ctrl + F5</strong> or open a private browser window.</li>
+<li>Verify <strong>Publications</strong> shows the thesis with <strong>Paper (PDF)</strong> and <strong>Slides (PDF)</strong>. Also open <strong>Notes</strong>, <strong>Blog Posts</strong>, and <strong>CV</strong>.</li>
+</ol>
+<p>Back in Desktop, switch to <code>master</code>, click <strong>Fetch origin</strong>, and then <strong>Pull origin</strong>. Your computer now has the published version. Later edits pushed to <code>master</code> will automatically run this workflow again.</p>
+<h2>Troubleshooting</h2>
+<table>
+<thead>
+<tr>
+<th>What you see</th>
+<th>What to check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>There is no Fuwari workflow in Actions</td>
+<td>Confirm <code>.github/workflows/pages.yml</code> was copied and committed. Check the branch in GitHub.</td>
+</tr>
+<tr>
+<td>Only the old Jekyll workflow runs</td>
+<td>Set Pages <strong>Source</strong> to <strong>GitHub Actions</strong>, and ensure the redesign has reached <code>master</code>.</td>
+</tr>
+<tr>
+<td>Pull request is green but the live site is unchanged</td>
+<td>A pull request does not deploy. Merge it into <code>master</code>, then wait for the deploy job.</td>
+</tr>
+<tr>
+<td><code>package.json</code> or lockfile is missing</td>
+<td>The extracted package may be nested one folder too deep. Compare with the folder tree in Step 5.</td>
+</tr>
+<tr>
+<td>Deployment says Pages is not configured</td>
+<td>Check Step 8 and your permission to administer this repository.</td>
+</tr>
+<tr>
+<td>Actions are disabled by an organization policy</td>
+<td>Ask the repository/organization administrator to allow this workflow. Do not remove policy protections.</td>
+</tr>
+<tr>
+<td>A photo or PDF returns 404</td>
+<td>File names are case-sensitive online. Match <code>public/files/Example.pdf</code> with <code>/files/Example.pdf</code>.</td>
+</tr>
+<tr>
+<td>A check fails after editing Markdown</td>
+<td>Check the lines between the opening and closing <code>---</code>; dates and indentation matter. The error log names the file.</td>
+</tr>
+</tbody>
+</table>
+<p>The provided workflow targets <code>master</code>. If you intentionally rename that branch, also update the branch names and deploy condition in <code>.github/workflows/pages.yml</code>.</p>
+<h2>If you want to undo publication</h2>
+<p>Before merging, you can simply leave the pull request unmerged. After merging, GitHub's pull-request page can offer <strong>Revert</strong> to create a new pull request that reverses the merge. Review and merge that reversal. Returning fully to the former Jekyll site also requires restoring Pages <strong>Source</strong>, branch, and folder to the settings you recorded in Step 8. Keep the old content folders until you are comfortable with the migration.</p>
+<p>For everyday changes after publishing, read <a href="#update">UPDATE-YOUR-WEBSITE.md</a>. For the photo replacement map, read <a href="#images">CUSTOMIZE.md</a>.</p>
+</section><section id="update"><h1>How to update your personal website</h1>
+<p>Your new site uses Fuwari with Astro. You write in Markdown, place documents and pictures in folders, and upload changes to GitHub. The workflow rebuilds the website after each update to <code>master</code>.</p>
+<h2>The files you will use most</h2>
+<table>
+<thead>
+<tr>
+<th>What you want to change</th>
+<th>Where to edit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name, sidebar biography, links, title, default accent color</td>
+<td><code>src/config.ts</code></td>
+</tr>
+<tr>
+<td>Homepage introduction</td>
+<td><code>src/components/HomeIntro.astro</code></td>
+</tr>
+<tr>
+<td>About text, research interests, weekly poem</td>
+<td><code>src/content/spec/about.md</code></td>
+</tr>
+<tr>
+<td>CV</td>
+<td><code>src/content/spec/cv.md</code></td>
+</tr>
+<tr>
+<td>Blog posts</td>
+<td><code>src/content/posts/</code></td>
+</tr>
+<tr>
+<td>Notes and seminar slides</td>
+<td><code>src/content/notes/</code></td>
+</tr>
+<tr>
+<td>Publications</td>
+<td><code>src/content/publications/</code></td>
+</tr>
+<tr>
+<td>PDFs and PowerPoint files</td>
+<td><code>public/files/</code></td>
+</tr>
+<tr>
+<td>Photos used by posts</td>
+<td><code>public/images/</code></td>
+</tr>
+<tr>
+<td>Background banner</td>
+<td><code>src/assets/images/banner.jpg</code></td>
+</tr>
+<tr>
+<td>Profile avatar</td>
+<td><code>src/assets/images/avatar.png</code></td>
+</tr>
+</tbody>
+</table>
+<p>The old <code>_posts</code>, <code>_teaching</code>, <code>_publications</code>, <code>_pages</code>, <code>_config.yml</code>, <code>images</code>, and <code>files</code> directories may still exist in your repository as migration reference. Editing them will not update the new Fuwari website. Use the new paths above. A public URL such as <code>/files/Defense.pdf</code> corresponds to the local file <code>public/files/Defense.pdf</code>.</p>
+<h2>A. Your normal update routine</h2>
+<ol>
+<li>Open GitHub Desktop and select <code>Chen-Muyang.github.io</code>.</li>
+<li>Switch to <code>master</code>, then <strong>Fetch origin → Pull origin</strong> if a pull is offered.</li>
+<li>Choose <strong>Repository → Show in Explorer</strong>. Open the relevant file in a text editor, such as <a href="https://code.visualstudio.com/">Visual Studio Code</a>.</li>
+<li>Make your edits and save the files. On Windows, show file extensions so <code>my-post.md</code> does not accidentally become <code>my-post.md.txt</code>.</li>
+<li>Return to Desktop and review <strong>Changes</strong>. Enter a short summary, such as <code>Add a note on spin fluctuations</code>.</li>
+<li>Click <strong>Commit to master</strong>, then <strong>Push origin</strong>. Saving or committing alone does not update the live site.</li>
+<li>Open the repository's <strong>Actions</strong> tab. Wait for the <strong>Build and deploy Fuwari</strong> run to succeed, then refresh your website.</li>
+</ol>
+<p>If your repository requires pull requests, or you want to check a larger change first, create a branch from <code>master</code>, commit/publish it, open a pull request, and merge after its build passes. The first-publication guide explains that process.</p>
+<p>For a small text correction, you can also open the file on GitHub, click its pencil icon, edit, and use <strong>Commit changes</strong>. Then pull the new version in Desktop before your next local edit. Use Desktop for adding photos, PDFs, or several related files together.</p>
+<h2>B. Add a blog post</h2>
+<p>Create <code>src/content/posts/my-new-post.md</code>. Copy this example, changing the title, date, and body:</p>
+<pre><code class="language-markdown">---
+title: &quot;A new research semester&quot;
+published: 2026-10-19
+description: &quot;A few thoughts about research and life at Penn State.&quot;
+image: &quot;/images/my-new-photo.jpg&quot;
+tags: [Physics, Life]
+category: Life
+draft: false
+lang: en
+---
+
+Write your introduction here.
+
+## A section heading
+
+You can use **bold text**, *italics*, and [a link](https://www.psu.edu/).
+
+![Describe what is in the photograph](/images/my-new-photo.jpg)
+
+Inline mathematics works: $E = mc^2$.
+
+$$
+H = \sum_i h_i
+$$
+</code></pre>
+<p>Put the corresponding photograph in <code>public/images/my-new-photo.jpg</code>. If you do not want a cover, use <code>image: &quot;&quot;</code> and remove the example photograph from the body. Images are optional: the template does not require a new background for each article.</p>
+<p>The page normally appears at <code>/posts/my-new-post/</code>. <code>published</code> controls sorting; it is not a publication scheduler. A future-dated entry with <code>draft: false</code> will still be visible. Set <code>draft: true</code> while writing, then change it to <code>false</code> when ready. Drafts appear in the development server but are excluded from the production build, archive, and feed.</p>
+<p>The four migrated posts have explicit <code>slug:</code> values preserving their former URLs. Keep those slugs unchanged when editing their contents. New posts do not need a <code>slug</code>, unless you want a custom path such as <code>2026/10/my-new-post</code> (without leading or trailing <code>/</code>).</p>
+<p>Optional front matter: <code>updated: 2026-10-20</code> records a later edit. Quote titles containing punctuation such as a colon. Keep both <code>---</code> lines, use spaces instead of tabs, and write dates in <code>YYYY-MM-DD</code> form.</p>
+<h2>C. Add a note or seminar</h2>
+<ol>
+<li>Copy your PDF to <code>public/files/Spin-Fluctuations.pdf</code>.</li>
+<li>Create <code>src/content/notes/spin-fluctuations.md</code> with the following structure.</li>
+<li>Change the example details and write your explanation below the second <code>---</code>.</li>
+</ol>
+<pre><code class="language-markdown">---
+title: &quot;Spin fluctuation notes&quot;
+published: 2026-10-19
+permalink: /teaching/spin-fluctuations
+topic: Superconductivity
+venue: Penn State University, Department of Physics
+description: &quot;Working notes on spin fluctuations and pairing.&quot;
+paper: /files/Spin-Fluctuations.pdf
+paperLabel: Read note (PDF)
+---
+
+A short introduction, assumptions, and references can go here.
+</code></pre>
+<p>The note appears automatically in <strong>Notes</strong>. The old <code>/teaching/</code> URL is intentionally retained for this section. Use a unique permalink beginning with <code>/teaching/</code>, with no trailing slash. <code>paperLabel</code> can also be <code>Slides (PDF)</code> for a seminar deck. Notes do not currently support draft flags; add them to your published branch when ready.</p>
+<h2>D. Add a publication with both paper and slides</h2>
+<ol>
+<li>Copy the PDFs into <code>public/files/</code>, for example <code>My-Paper.pdf</code> and <code>My-Talk.pdf</code>.</li>
+<li>Create <code>src/content/publications/my-paper.md</code>:</li>
+</ol>
+<pre><code class="language-markdown">---
+title: &quot;Title of my paper&quot;
+published: 2026-10-19
+permalink: /publication/my-paper
+topic: Research paper
+venue: &quot;Journal or conference name&quot;
+description: &quot;One or two sentences describing the work.&quot;
+paper: /files/My-Paper.pdf
+paperLabel: Paper (PDF)
+slides: /files/My-Talk.pdf
+---
+
+Authors, an abstract, citation, and a DOI link can go here.
+</code></pre>
+<p>Every entry appears in <strong>Publications</strong> automatically; you do not need to register its topic in a separate configuration file. <code>paper</code> is required and <code>slides</code> is optional. If there are no slides, omit that entire line rather than leaving a blank value. You can optionally add <code>presentation: /files/My-Talk.pptx</code> for the editable PowerPoint download.</p>
+<p>Your existing thesis already has working buttons for <code>UndergraduateThesis.pdf</code> and <code>Defense.pdf</code>. The slides PDF was exported from your existing <code>Defense.pptx</code>. Updating the PowerPoint alone does not refresh its PDF: in PowerPoint, use <strong>File → Export → Create PDF/XPS</strong>, save a new <code>Defense.pdf</code>, and replace <code>public/files/Defense.pdf</code> too. Keeping the same filename keeps existing links working. Publications do not currently support draft flags.</p>
+<h2>E. Replace the background, avatar, and cover photos</h2>
+<table>
+<thead>
+<tr>
+<th>Picture</th>
+<th>Replace this file</th>
+<th>Current picture</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main background banner</td>
+<td><code>src/assets/images/banner.jpg</code></td>
+<td>Your Kyoto / Kinkaku-ji photograph</td>
+</tr>
+<tr>
+<td>Profile avatar</td>
+<td><code>src/assets/images/avatar.png</code></td>
+<td>Your illustrated avatar</td>
+</tr>
+<tr>
+<td>Start cover</td>
+<td><code>public/images/Kyoto.jpg</code></td>
+<td>Kyoto</td>
+</tr>
+<tr>
+<td>New Life cover</td>
+<td><code>public/images/OldMain.jpg</code></td>
+<td>Old Main</td>
+</tr>
+<tr>
+<td>Some Mind Sparks cover</td>
+<td><code>public/images/Nittany2.jpg</code></td>
+<td>Mount Nittany</td>
+</tr>
+<tr>
+<td>Review of Modern PhD cover</td>
+<td><code>public/images/Nittany.jpg</code></td>
+<td>Mount Nittany</td>
+</tr>
+<tr>
+<td>Browser-tab icon</td>
+<td><code>public/favicon.svg</code></td>
+<td>Green “C” monogram</td>
+</tr>
+</tbody>
+</table>
+<p>Use a wide landscape image for the banner (about 1920–2400 pixels wide) and a square image for the avatar (512 × 512 pixels or larger). The banner crops to fit the screen, so keep your subject near the center. The banner and avatar are optimized during the build. Post photographs are served from <code>public</code> as supplied; resize/compress very large new photos before adding them.</p>
+<p>Replacing a file with the same name is the easiest method. Keep the actual file format correct: renaming a PNG to <code>.jpg</code> does not convert it. The current post photos are also used inside posts, so replacing one changes both uses. For an independent cover, add another image and change only the post's <code>image:</code> field.</p>
+<p>To use a different banner filename, edit <code>src/config.ts</code>:</p>
+<pre><code class="language-typescript">banner: {
+  enable: true,
+  src: &quot;assets/images/my-banner.webp&quot;,
+  position: &quot;center&quot;,
+  credit: { enable: false, text: &quot;&quot;, url: &quot;&quot; },
+},
+</code></pre>
+<p>Place that file at <code>src/assets/images/my-banner.webp</code>. Set <code>enable: false</code> to remove the background entirely. Set <code>position</code> to <code>top</code>, <code>center</code>, or <code>bottom</code> to adjust the crop. The avatar path is <code>profileConfig.avatar</code> in the same file.</p>
+<h2>F. Update your personal details and appearance</h2>
+<p>In <code>src/config.ts</code>, edit <code>profileConfig.name</code>, <code>bio</code>, and <code>links</code>. Edit <code>siteConfig.title</code> and <code>subtitle</code> for the site's name and description. Keep the quotation marks and commas around these values.</p>
+<p>The default accent is <code>themeColor: { hue: 165, fixed: false }</code>. Change the hue (0–360) for a different default color. Visitors can adjust it themselves because <code>fixed</code> is false; setting it true hides the color picker. The light/dark control is already included. A visitor's saved preference may override the default you just changed, so test defaults in a private window.</p>
+<p>For the homepage introduction, edit the visible text in <code>src/components/HomeIntro.astro</code> while leaving the HTML tags intact. For the About page, weekly poem, and CV, edit the Markdown files in the table at the top. The inherited CV is brief; expand it with your own verified details whenever you wish.</p>
+<h2>G. Optional local preview before uploading</h2>
+<p>You can publish using GitHub's build without installing these tools. For editing with a local preview:</p>
+<ol>
+<li>Install <strong>Node.js 24</strong> from <a href="https://nodejs.org/">nodejs.org</a>.</li>
+<li>In File Explorer, open the source/repository folder containing <code>package.json</code>. Type <code>cmd</code> in Explorer's address bar and press Enter to open a command window there.</li>
+<li>Run these commands one line at a time:</li>
+</ol>
+<pre><code class="language-sh">npm install --global pnpm@11.25.0
+pnpm install --frozen-lockfile
+pnpm dev
+</code></pre>
+<p>Open the local address printed by the server (normally <code>http://localhost:4321</code>). Changes refresh as you save. Press <strong>Ctrl + C</strong> to stop the server. To check the actual production build, including search:</p>
+<pre><code class="language-sh">pnpm check
+pnpm build
+pnpm verify
+pnpm preview
+</code></pre>
+<p>Search uses the production index, so test it with <code>pnpm preview</code>, not <code>pnpm dev</code>. The compiled-preview ZIP also includes a standalone Node server and its own instructions; it needs no dependency installation.</p>
+<h2>H. Before each update</h2>
+<ul>
+<li>Check exact spelling and uppercase/lowercase in every new file path.</li>
+<li>Open any new PDF and confirm that it is the intended document.</li>
+<li>Keep migrated slugs and permalinks to preserve existing links.</li>
+<li>Do not edit <code>dist/</code> or <code>node_modules/</code>; they are generated, and changes there will be lost.</li>
+<li>Commit the source and any new assets, then push and wait for the workflow to finish.</li>
+</ul>
+<p>The verification script protects the migrated routes and the original four document filenames. If you intentionally remove those pages or rename those four files, you must also update <code>scripts/verify-site.mjs</code>; otherwise the build will correctly report that a preserved resource is missing. Adding new content or changing existing titles/text does not require changing that script.</p>
+</section><section id="images"><h1>Customize your Fuwari site</h1>
+<p>Your site remains at <code>https://chen-muyang.github.io/</code>. The top navigation keeps Publications, Notes, Blog Posts, and CV. The homepage adds an introduction and recent posts.</p>
+<h2>Images you can replace</h2>
+<table>
+<thead>
+<tr>
+<th>Image</th>
+<th>Current source</th>
+<th>File to replace</th>
+<th>Suggested size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Background banner</td>
+<td>Your Kyoto / Kinkaku-ji photo</td>
+<td><code>src/assets/images/banner.jpg</code></td>
+<td>Landscape, at least 1920 px wide. Keep the subject near the center; the site crops differently on phones.</td>
+</tr>
+<tr>
+<td>Profile avatar</td>
+<td>Your existing illustrated avatar</td>
+<td><code>src/assets/images/avatar.png</code></td>
+<td>Square, 512 × 512 px or larger</td>
+</tr>
+<tr>
+<td>Start cover</td>
+<td>Your Kyoto photo</td>
+<td><code>public/images/Kyoto.jpg</code></td>
+<td>Landscape, 1600–2000 px wide</td>
+</tr>
+<tr>
+<td>New Life cover</td>
+<td>Your Old Main photo</td>
+<td><code>public/images/OldMain.jpg</code></td>
+<td>Landscape, 1600–2000 px wide</td>
+</tr>
+<tr>
+<td>Some Mind Sparks cover</td>
+<td>Your Mount Nittany photo</td>
+<td><code>public/images/Nittany2.jpg</code></td>
+<td>Landscape, 1600–2000 px wide</td>
+</tr>
+<tr>
+<td>Review of Modern PhD cover</td>
+<td>Your Mount Nittany photo</td>
+<td><code>public/images/Nittany.jpg</code></td>
+<td>Landscape, 1600–2000 px wide</td>
+</tr>
+<tr>
+<td>Browser-tab icon</td>
+<td>Simple “C” monogram</td>
+<td><code>public/favicon.svg</code></td>
+<td>Square SVG, or change the favicon path in <code>src/config.ts</code></td>
+</tr>
+</tbody>
+</table>
+<p>Replace a file with the same name to change it without editing code. The banner and avatar are optimized automatically during the build. The blog photographs are also used within your existing posts, so replacing one changes both its cover and inline photograph. To give a post an independent cover, add an image to <code>public/images/</code> and change only that post's <code>image:</code> field.</p>
+<p>You can use a different image format or filename by changing <code>siteConfig.banner.src</code> or <code>profileConfig.avatar</code> in <code>src/config.ts</code>. Banner position accepts <code>top</code>, <code>center</code>, or <code>bottom</code>. Set <code>banner.enable</code> to <code>false</code> if you prefer no background image. These initial images come from your own existing repository; no external image service is required.</p>
+<h2>Text and content</h2>
+<ul>
+<li>Site title, accent hue, avatar, navigation, and sidebar biography: <code>src/config.ts</code>.</li>
+<li>Homepage introduction: <code>src/components/HomeIntro.astro</code>.</li>
+<li>About page and weekly poem: <code>src/content/spec/about.md</code>.</li>
+<li>CV: <code>src/content/spec/cv.md</code>.</li>
+<li>Blog posts: <code>src/content/posts/*.md</code>. Keep each migrated <code>slug</code> to preserve existing links. New posts need <code>title</code> and <code>published</code>; images are optional. Use <code>draft: true</code> to hide unfinished posts from production.</li>
+<li>Notes: <code>src/content/notes/*.md</code>. Keep <code>permalink</code>, <code>paper</code>, and <code>paperLabel</code> accurate.</li>
+<li>Publications: <code>src/content/publications/*.md</code>. Each entry appears automatically without needing a matching category setting. <code>paper</code> and optional <code>slides</code> each produce their own button.</li>
+<li>Downloadable documents: <code>public/files/</code>. The thesis uses <code>UndergraduateThesis.pdf</code>; its converted slides use <code>Defense.pdf</code>. <code>Defense.pptx</code> remains available too.</li>
+</ul>
+<p>The former Jekyll content at <code>_posts</code>, <code>_teaching</code>, <code>_publications</code>, <code>_pages</code>, <code>images</code>, and <code>files</code> is retained as migration reference. Edit the new <code>src/content</code> and <code>public</code> paths for the Fuwari site. Avoid editing both copies.</p>
+<h2>Build and preview</h2>
+<p>Use Node.js 24 and pnpm 11.25.0:</p>
+<pre><code class="language-sh">pnpm install --frozen-lockfile
+pnpm check
+pnpm build
+pnpm verify
+pnpm preview
+</code></pre>
+<p>Use the production preview to test search, because Pagefind indexes the compiled site. The development server is <code>pnpm dev</code>.</p>
+<h2>Publish on GitHub Pages</h2>
+<p>The <code>Build and deploy Fuwari</code> workflow checks pull requests and deploys only from <code>master</code>. Before merging the redesign, set repository <strong>Settings → Pages → Build and deployment → Source</strong> to <strong>GitHub Actions</strong>. A pull request does not publish or replace the current site. The workflow runs the production build, search indexing, and internal-link verification before deployment.</p>
+<p>The template is Fuwari by saicaca (see <code>LICENSE-FUWARI</code>); existing repository license information is retained. No new content license is imposed on your writing.</p>
+</section></main></body></html>

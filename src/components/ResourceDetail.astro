@@ -1,0 +1,24 @@
+---
+import type { CollectionEntry } from "astro:content";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import Markdown from "./misc/Markdown.astro";
+import ResourceLinks from "./ResourceLinks.astro";
+interface Props { entry: CollectionEntry<"publications"> | CollectionEntry<"notes"> }
+const { entry } = Astro.props;
+const { Content, headings } = await entry.render();
+const d = entry.data;
+---
+<MainGridLayout title={d.title} description={d.description} headings={headings}>
+  <article class="card-base p-6 md:p-9" data-pagefind-body>
+    <p class="text-[var(--primary)] text-sm font-bold mb-4">{d.topic} · {d.published.getUTCFullYear()}</p>
+    <h1 data-pagefind-meta="title" class="text-3xl md:text-4xl font-bold text-90 leading-tight">{d.title}</h1>
+    <p class="text-50 mt-4">{d.venue}</p>
+    <ResourceLinks {...d} />
+    <Markdown class="mt-8"><Content /></Markdown>
+    <details class="mt-8 rounded-xl border border-[var(--line-divider)] p-4">
+      <summary class="cursor-pointer text-[var(--primary)] font-bold">Preview {entry.collection === "publications" ? "paper" : "note"}</summary>
+      <p class="text-sm text-50 mt-3">If the preview is unavailable, use the PDF button above.</p>
+      <iframe class="w-full h-[36rem] mt-4 rounded-lg bg-white" src={d.paper} title={`${d.title} PDF preview`} loading="lazy"></iframe>
+    </details>
+  </article>
+</MainGridLayout>
