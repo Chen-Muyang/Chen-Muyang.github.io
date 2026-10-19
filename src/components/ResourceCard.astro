@@ -1,0 +1,17 @@
+---
+import type { CollectionEntry } from "astro:content";
+import ResourceLinks from "./ResourceLinks.astro";
+interface Props { entry: CollectionEntry<"publications"> | CollectionEntry<"notes"> }
+const { entry } = Astro.props;
+const data = entry.data;
+---
+<article class="card-base p-6 md:p-8 mb-4">
+  <div class="flex flex-wrap gap-3 items-center text-sm text-50 mb-3">
+    <span class="px-3 py-1 rounded-lg bg-[var(--btn-regular-bg)] text-[var(--primary)] font-bold">{data.topic}</span>
+    <time datetime={data.published.toISOString()}>{data.published.getUTCFullYear()}</time>
+    <span>{data.venue}</span>
+  </div>
+  <h2 class="text-2xl font-bold text-90 leading-tight"><a class="link" href={data.permalink + "/"}>{data.title}</a></h2>
+  <p class="text-75 leading-relaxed mt-4">{data.description}</p>
+  <ResourceLinks {...data} />
+</article>

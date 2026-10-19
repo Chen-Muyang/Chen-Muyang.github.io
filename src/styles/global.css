@@ -1,0 +1,12 @@
+@import "./main.css";
+@import "./markdown.css";
+@import "./transition.css";
+@import "./scrollbar.css";
+@import "./photoswipe.css";
+@import "./expressive-code.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; }

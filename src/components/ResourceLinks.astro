@@ -1,0 +1,9 @@
+---
+interface Props { paper: string; paperLabel?: string; slides?: string; presentation?: string }
+const { paper, paperLabel = "Paper (PDF)", slides, presentation } = Astro.props;
+---
+<div class="flex flex-wrap gap-3 mt-5" aria-label="Download resources">
+  <a data-no-swup class="btn-regular rounded-xl px-5 py-3 font-bold" href={paper} target="_blank" rel="noopener">{paperLabel} ↗</a>
+  {slides && <a data-no-swup class="btn-regular rounded-xl px-5 py-3 font-bold" href={slides} target="_blank" rel="noopener">Slides (PDF) ↗</a>}
+  {presentation && <a data-no-swup class="btn-plain rounded-xl px-4 py-3" href={presentation}>PowerPoint ↓</a>}
+</div>
